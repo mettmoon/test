@@ -80,6 +80,7 @@
 				EDF5D170257680F0004F11A2 /* Sources */,
 				EDF5D171257680F0004F11A2 /* Frameworks */,
 				EDF5D172257680F0004F11A2 /* Resources */,
+				EDF863BC2576921300A1EC74 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -151,6 +152,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ $CONFIGURATION == Release ]; then\n    echo \"Bumping build number...\"\n    plist=${PROJECT_DIR}/${INFOPLIST_FILE}\n\n# increment the build number (ie 115 to 116)\n    buildnum=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${plist}\")\n    if [[ \"${buildnum}\" == \"\" ]]; then\n        echo \"No build number in $plist\"\n        exit 2\n    fi\n\n    buildnum=$(expr $buildnum + 1)\n    /usr/libexec/Plistbuddy -c \"Set CFBundleVersion $buildnum\" \"${plist}\"\n    echo \"Bumped build number to $buildnum\"\n\nelse\n    echo $CONFIGURATION \" build - Not bumping build number.\"\nfi\n\ngit add .\ngit commit -m\"commit test\"\ngit push -u origin\n";
+		};
+		EDF863BC2576921300A1EC74 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# /bin/bash \n\n#Usage: $ ./cs_xproj_validate.sh path/to/xcode/project/file/theproject.xcodeproj\n#More info: http://stackoverflow.com/q/13962341/89035\n\nPROJECT_FILE=\"$1/project.pbxproj\"\n\nPREVIOUS_LINE=-1\n\nfor LINE in `cat \"$PROJECT_FILE\" | grep -n CODE_SIGN_IDENTITY | grep -o -E '^([0-9]*)'`\ndo\n  TEMP=`expr $PREVIOUS_LINE + 1`\n    \n    if [  $TEMP -eq $LINE ] ; then\n        echo \"There is a Code Signing Identity (CODE_SIGN_IDENTITY) issue in $PROJECT_FILE at line $PREVIOUS_LINE.\"\n        exit 1\n    fi\n    \n    PREVIOUS_LINE=$LINE\n    \ndone\n\nexit 0\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
