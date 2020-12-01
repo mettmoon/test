@@ -76,7 +76,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EDF5D183257680F0004F11A2 /* Build configuration list for PBXNativeTarget "referFolderTest" */;
 			buildPhases = (
-				EDF863BC2576921300A1EC74 /* ShellScript */,
+				EDF863BC2576921300A1EC74 /* Run Script(project) */,
 				EDF863AC25768A2000A1EC74 /* ShellScript */,
 				EDF5D170257680F0004F11A2 /* Sources */,
 				EDF5D171257680F0004F11A2 /* Frameworks */,
@@ -153,7 +153,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ $CONFIGURATION == Release ]; then\n    echo \"Bumping build number...\"\n    plist=${PROJECT_DIR}/${INFOPLIST_FILE}\n\n# increment the build number (ie 115 to 116)\n    buildnum=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${plist}\")\n    if [[ \"${buildnum}\" == \"\" ]]; then\n        echo \"No build number in $plist\"\n        exit 2\n    fi\n\n    buildnum=$(expr $buildnum + 1)\n    /usr/libexec/Plistbuddy -c \"Set CFBundleVersion $buildnum\" \"${plist}\"\n    echo \"Bumped build number to $buildnum\"\n\nelse\n    echo $CONFIGURATION \" build - Not bumping build number.\"\nfi\n\ngit add .\ngit commit -m\"commit test\"\ngit push -u origin\n";
 		};
-		EDF863BC2576921300A1EC74 /* ShellScript */ = {
+		EDF863BC2576921300A1EC74 /* Run Script(project) */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -162,6 +162,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script(project)";
 			outputFileListPaths = (
 			);
 			outputPaths = (
