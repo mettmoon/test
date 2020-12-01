@@ -168,7 +168,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# /bin/bash \n\n#Usage: $ ./cs_xproj_validate.sh path/to/xcode/project/file/theproject.xcodeproj\n#More info: http://stackoverflow.com/q/13962341/89035\n\nPROJECT_FILE=\"$1/project.pbxproj\"\necho $PROJECT_DIR/$PROJECT\nPREVIOUS_LINE=-1\n\nfor LINE in `cat \"$PROJECT_FILE\" | grep -n CODE_SIGN_IDENTITY | grep -o -E '^([0-9]*)'`\ndo\n  TEMP=`expr $PREVIOUS_LINE + 1`\n    \n    if [  $TEMP -eq $LINE ] ; then\n        echo \"There is a Code Signing Identity (CODE_SIGN_IDENTITY) issue in $PROJECT_FILE at line $PREVIOUS_LINE.\"\n        exit 1\n    fi\n    \n    PREVIOUS_LINE=$LINE\n    \ndone\n\nexit 0\n";
+			shellScript = "# /bin/bash \n\n#Usage: $ ./cs_xproj_validate.sh path/to/xcode/project/file/theproject.xcodeproj\n#More info: http://stackoverflow.com/q/13962341/89035\n\nPROJECT_FILE=\"$PROJECT_DIR/$PROJECT.xcodeproj/project.pbxproj\"\necho $PROJECT_FILE\nPREVIOUS_LINE=-1\n\nfor LINE in `cat \"$PROJECT_FILE\" | grep -n CODE_SIGN_IDENTITY | grep -o -E '^([0-9]*)'`\ndo\n  TEMP=`expr $PREVIOUS_LINE + 1`\n    \n    if [  $TEMP -eq $LINE ] ; then\n        echo \"There is a Code Signing Identity (CODE_SIGN_IDENTITY) issue in $PROJECT_FILE at line $PREVIOUS_LINE.\"\n        exit 1\n    fi\n    \n    PREVIOUS_LINE=$LINE\n    \ndone\n\nexit 0\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
